@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'eclipse'
+}
+
+repositories {
+    mavenCentral()
+
+    maven { url "http://jacamo.sourceforge.net/maven2" }
+    maven { url "https://repo.gradle.org/gradle/libs-releases-local" }
+    maven { url "https://jitpack.io" }
+    maven { url "https://jade.tilab.com/maven/"}
+}
+
+dependencies {
+	compile group: 'org.jacamo' , name: 'jacamo'   , version: '0.9-SNAPSHOT'  , changing: true , transitive: true
+
+	compile 'org.jason-lang:jason:2.5-SNAPSHOT'
+		
+}
+
+
+task run (type: JavaExec, dependsOn: 'classes') {
+    description 'runs the application'
+    group ' JaCaMo'
+    main = 'jacamo.infra.JaCaMoLauncher'
+    args 'validatorArtifact.jcm'
+    classpath sourceSets.main.runtimeClasspath
+}
+
+sourceSets {
+    main {
+        java { 
+            srcDir 'src/env'
+            srcDir 'src/agt'
+            srcDir 'src/validatorArtifact'
+            srcDir 'src/val'
+        }
+    }
+}
